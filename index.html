@@ -1,1 +1,182 @@
-test
+<!DOCTYPE html>
+<html lang="en" manifest="apple.manifest">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+		apiKey: "AIzaSyBLeRUwjrRDXdVyqdXK9SBQ7jR2ZziGP8w",
+		authDomain: "ceci-vertretungsplan.firebaseapp.com",
+		databaseURL: "https://ceci-vertretungsplan.firebaseio.com",
+		storageBucket: "ceci-vertretungsplan.appspot.com",
+	  };
+	  firebase.initializeApp(config);
+	</script>
+    
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+	<header>
+		<div class="logo"></div>
+		<div class="select">
+			<button class="selectBtn" id="selectBtn" onClick="dropDown()">
+				<img src="dropdown.png" height="40px"/>
+			</button>
+			<button class="dropMenu dropEf" id="dropEF" onClick="setJahrgang(this.id); signIn()">EF</button>
+			<button class="dropMenu dropQ1" id="dropQ1" onClick="setJahrgang(this.id); signIn()">Q1</button>
+			<button class="dropMenu dropQ2" id="dropQ2" onClick="setJahrgang(this.id); signIn()">Q2</button>
+			<script>
+				function dropDown(){
+					var block = document.getElementById("dropEF").style.display;
+					if(block!="block"){
+						document.getElementById("dropEF").style.display="block";
+						document.getElementById("dropQ1").style.display="block";
+						document.getElementById("dropQ2").style.display="block";
+						
+						document.getElementById("selectBtn").style['border-bottom-left-radius']="0px";
+						document.getElementById("selectBtn").style['border-bottom-right-radius']="0px";
+					}else{
+						document.getElementById("dropEF").style.display="none";
+						document.getElementById("dropQ1").style.display="none";
+						document.getElementById("dropQ2").style.display="none";
+						
+						document.getElementById("selectBtn").style['border-bottom-left-radius']="4px";
+						document.getElementById("selectBtn").style['border-bottom-right-radius']="4px";
+					}
+				}
+				
+				function setJahrgang(clicked_id){
+					document.getElementById("stufe").innerHTML = clicked_id;
+				}
+			</script>
+			<div id="stufe" style="display:none">dropEF</div>
+		</div>
+	</header>
+	
+	<div class="content" id="content">
+	<div id="conTable"></div>
+	<input type="text" id="uName" placeholder="Benutzername" style="display:none"></input>
+	<input type="text" id="pwd"placeholder="Passwort" style="display:none"></input>
+	<button id="subBtn" style="display:none" onclick="signIn()">Login</button>
+	</div>
+	
+	<script type="text/javascript">
+	function signIn(){
+	
+		document.getElementById("uName").style.display="none";
+		document.getElementById("pwd").style.display="none";
+		document.getElementById("subBtn").style.display="none";
+	
+	//firebase.auth().signOut();
+		var email = document.getElementById('uName').value + "@example.com";
+        var pwd = document.getElementById('pwd').value;
+		
+		
+		firebase.auth().signInWithEmailAndPassword(email, pwd).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            console.error(error);
+          }
+          // [END_EXCLUDE]
+        });
+		
+		var user = firebase.auth().currentUser;
+		var uid;
+		if(user){
+			uid = user.uid;
+		}
+		
+		firebase.database().ref('users/' + uid + '/').on('value', function(snapshot) {
+		var data = snapshot.val();
+			
+			var myTable = "<table id='table'>";
+			var jahrgang = document.getElementById("stufe").innerHTML;
+			switch(jahrgang){
+				case "dropEF":
+					var stufe = data.EF;
+					break;
+				case "dropQ1":
+					var stufe = data.Q1;
+					break;
+				case "dropQ2":
+					var stufe = data.Q2;
+					break;
+			}
+			
+			var datum = "99.99";
+			for(var i=1;i<=stufe.length-1; i++){
+				var obj = stufe[i];
+				if(datum != obj.Datum){
+					myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
+					myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
+					
+					myTable+= "<tr><td>"+obj.Fach+"</td>";
+					myTable+= "<td>"+obj.Stunde+"</td>";
+					myTable+= "<td>"+obj.Vertreter+"</td>";
+					myTable+= "<td>"+obj.Raum+"</td>";
+					if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+						myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+					}else{
+						myTable+= "<td>&nbsp</td></tr>";
+					}
+				}
+				else{
+					myTable+= "<tr><td>"+obj.Fach+"</td>";
+					myTable+= "<td>"+obj.Stunde+"</td>";
+					myTable+= "<td>"+obj.Vertreter+"</td>";
+					myTable+= "<td>"+obj.Raum+"</td>";
+					if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+						myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+					}else{
+						myTable+= "<td>&nbsp</td></tr>";
+					}
+				}
+				datum = obj.Datum;
+			}
+			myTable+="</table>";
+			document.getElementById("conTable").innerHTML = myTable;
+		});
+	}
+	
+	function loginForm(){
+		document.getElementById("uName").style.display="block";
+		document.getElementById("pwd").style.display="block";
+		document.getElementById("subBtn").style.display="block";
+		
+		document.getElementById("table").style.display="none";
+	}
+	</script>
+	
+	<footer>
+	
+		
+		<div class="vPlan">
+			<button class="footerBtn vPlanBtn" onClick="signIn()">Vertretungsplan</button>
+		</div>
+		
+		
+		<div class="acc" >
+			<button class="footerBtn accBtn" onclick="loginForm()">Account</button>
+		</div>
+		
+		
+		<div class="info">
+			<button class="footerBtn infoBtn">Info</button>
+		</div>
+		
+	
+	</footer>
+  </body>
+</html>
