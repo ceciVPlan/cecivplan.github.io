@@ -32,7 +32,7 @@
 		<div class="logo"></div>
 		<div class="select">
 			<button class="selectBtn" id="selectBtn" onClick="dropDown()">
-				<img src="dropdown.png" height="40px"/>
+				<img src="dropdown.png" height="40px" id="imgDrop"/>
 			</button>
 			<button class="dropMenu dropEf" id="dropEF" onClick="setJahrgang(this.id); signIn()">EF</button>
 			<button class="dropMenu dropQ1" id="dropQ1" onClick="setJahrgang(this.id); signIn()">Q1</button>
@@ -47,6 +47,10 @@
 						
 						document.getElementById("selectBtn").style['border-bottom-left-radius']="0px";
 						document.getElementById("selectBtn").style['border-bottom-right-radius']="0px";
+						
+						document.getElementById("imgDrop").className="fade-out";
+						document.getElementById("imgDrop").src="dropup.png";
+						document.getElementById("imgDrop").className="fade-in";
 					}else{
 						document.getElementById("dropEF").style.display="none";
 						document.getElementById("dropQ1").style.display="none";
@@ -54,6 +58,10 @@
 						
 						document.getElementById("selectBtn").style['border-bottom-left-radius']="4px";
 						document.getElementById("selectBtn").style['border-bottom-right-radius']="4px";
+						
+						document.getElementById("imgDrop").className="fade-out";
+						document.getElementById("imgDrop").src="dropdown.png";
+						document.getElementById("imgDrop").className="fade-in";
 					}
 				}
 				
@@ -65,11 +73,11 @@
 		</div>
 	</header>
 	
-	<div class="content" id="content">
+	<div class="content" id="content"">
 	<div id="conTable"></div>
 	<input type="text" id="uName" placeholder="Benutzername" style="display:none"></input>
 	<input type="text" id="pwd"placeholder="Passwort" style="display:none"></input>
-	<button id="subBtn" style="display:none" onclick="signIn()">Login</button>
+	<button id="subBtn" style="display:none" onclick="signIn(); setStorage()">Login</button>
 	</div>
 	
 	<script type="text/javascript">
@@ -161,6 +169,11 @@
 		document.getElementById("subBtn").style.display="block";
 		
 		document.getElementById("table").style.display="none";
+	}
+	
+	function setStorage(){
+		localStorage.setItem("email", document.getElementById('uName').value + "@example.com");
+		localStorage.setItem("pwd", document.getElementById('pwd').value);
 	}
 	</script>
 	
