@@ -18,6 +18,7 @@
 		storageBucket: "ceci-vertretungsplan.appspot.com",
 	  };
 	  firebase.initializeApp(config);
+	  
 	</script>
     
     <link href="style.css" rel="stylesheet">
@@ -73,19 +74,25 @@
 		</div>
 	</header>
 	
-	<div class="content" id="content"">
+	<div class="content" id="content"></div>
 	<div id="conTable"></div>
-	<input type="text" id="uName" placeholder="Benutzername" style="display:none"></input>
-	<input type="text" id="pwd"placeholder="Passwort" style="display:none"></input>
-	<button id="subBtn" style="display:none" onclick="signIn(); setStorage()">Login</button>
+	<div id="conAcc" style="display:block">
+		<input type="text" id="uName" placeholder="Benutzername"></input>
+		<input type="text" id="pwd"placeholder="Passwort"></input>
+		<button id="subBtn" onclick="signIn(); setStorage()">Login</button>
+		
+		<span>
+			<br />
+			<br />
+			Tip: <br />Installiere diese WebApp auf deinem iOS-Gerät mit klick auf&nbsp <img src="action-icon-ios7.png" height="20"/> &nbsp"Zum Startbildschrim hinzufügen" um sie optimal nutzen zu können.
+		</span>
 	</div>
+	
 	
 	<script type="text/javascript">
 	function signIn(){
 	
-		document.getElementById("uName").style.display="none";
-		document.getElementById("pwd").style.display="none";
-		document.getElementById("subBtn").style.display="none";
+		document.getElementById("conAcc").style.display="none";
 	
 	//firebase.auth().signOut();
 		var email = document.getElementById('uName').value + "@example.com";
@@ -163,10 +170,18 @@
 		});
 	}
 	
+	function startup(){
+	var email = localStorage.getItem(email);
+		if(typeof email === "undefined" || email === null){
+			signIn();
+		}
+	}
+	
 	function loginForm(){
-		document.getElementById("uName").style.display="block";
-		document.getElementById("pwd").style.display="block";
-		document.getElementById("subBtn").style.display="block";
+		//document.getElementById("uName").style.display="block";
+		//document.getElementById("pwd").style.display="block";
+		//document.getElementById("subBtn").style.display="block";
+		document.getElementById("conAcc").style.display="block";
 		
 		document.getElementById("table").style.display="none";
 	}
