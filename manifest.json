@@ -1,5 +1,5 @@
 {
-  "name": "Web Application Manifest Sample",
+  "name": "Vertretungsplan",
   "icons": [
     {
       "src": "launcher-icon-0-75x.png",
@@ -39,6 +39,5 @@
     }
   ],
   "start_url": "index.html",
-  "display": "standalone",
-  "orientation": "landscape"
+  "display": "standalone"
 }
