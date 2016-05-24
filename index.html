@@ -32,19 +32,20 @@
 <div data-role="page">
 
 	<div data-role="header">
-		<h1>Page Title</h1>
-		<a href="#leftpanel1" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini">Overlay</a>
+		<h1>Vertretungsplan</h1>
+		<!--<a href="#leftpanel1" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini">Overlay</a>-->
+		<a href="#leftpanel1" data-role="none"><img src="nav.png" height=33 /></a>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
 		<div id="conTable">
 			<table id="table"></table>
 		</div>
-		
+	
 		<div id="conAcc">
 			<input type="text" id="uName" placeholder="Benutzername"></input>
-			<input type="text" id="pwd"placeholder="Passwort"></input>
-			<button id="subBtn" onclick="signIn(); setStorage()">Login</button>
+			<input type="password" id="pwd"placeholder="Passwort"></input>
+			<button id="subBtn" onclick="signIn('ef')">Login</button>
 		</div>
 		
 	</div><!-- /content -->
@@ -78,14 +79,18 @@
 	
 		document.getElementById("conAcc").style.display="none";
 	
-	//firebase.auth().signOut();
+		//firebase.auth().signOut();
 		
 		var email= document.getElementById('uName').value + "@example.com";
         var pwd = document.getElementById('pwd').value;
 		
 		if(email==null||pwd==null||email=="@example.com"||pwd==""){
-			email= localStorage.getItem("email");
+			email= localStorage.getItem("email")+"@example.com";
 			pwd= localStorage.getItem("pwd");
+			
+			if(email==null||pwd==null){
+				document.getElementById('conTable').value = "Bitte log dich mit deinen Zugangsdaten ein.";
+			}
 			
 			document.getElementById('uName').value=email;
 			document.getElementById('pwd').value=pwd;
@@ -163,6 +168,9 @@
 					datum = obj.Datum;
 				}
 				document.getElementById("table").innerHTML = myTable;
+				document.getElementById("table").style.display="table";
+				
+				setStorage();
 			});
 			
 		  } else {
@@ -179,7 +187,7 @@
 	}
 	
 	function setStorage(){
-		localStorage.setItem("email", document.getElementById('uName').value + "@example.com");
+		localStorage.setItem("email", document.getElementById('uName').value);
 		localStorage.setItem("pwd", document.getElementById('pwd').value);
 	}
 	

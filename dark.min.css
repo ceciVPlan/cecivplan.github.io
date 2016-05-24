@@ -73,13 +73,16 @@ div.ui-controlgroup-label {
 /* Own Table Properties */
 table{
 	width:100%;
-	border: 1px solid rgba(0,0,0,.8);
 	border-collapse: collapse;
 }
 
 td{
 	border: 1px solid rgba(0,0,0,.8);
 	border-collapse: collapse;
+}
+#date{
+	border:0;
+	font-size: 1.3em;
 }
 /* Buttons
 -----------------------------------------------------------------------------------------------------------*/
