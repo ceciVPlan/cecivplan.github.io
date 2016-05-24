@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" manifest="apple.manifest">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+<html>
+<head>
+	<title>Page Title</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="dark.min.css">
+	<script src="jquery.min.js"></script>
+	<!--<script src="demos/_assets/js/index.js"></script>-->
+	<script src="jquery.mobile-1.4.5.min.js"></script>
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
@@ -18,85 +22,74 @@
 		storageBucket: "ceci-vertretungsplan.appspot.com",
 	  };
 	  firebase.initializeApp(config);
+	  var rootRef = firebase.database().ref();
+	  
 	  
 	</script>
-    
-    <link href="style.css" rel="stylesheet">
-	<!-- For Web-App-->
-	<link rel="manifest" href="manifest.json">
-	
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-  </head>
-  <body>
-	<header>
-		<div class="logo"></div>
-		<div class="select">
-			<button class="selectBtn" id="selectBtn" onClick="dropDown()">
-				<img src="dropdown.png" height="40px" id="imgDrop"/>
-			</button>
-			<button class="dropMenu dropEf" id="dropEF" onClick="setJahrgang(this.id); signIn()">EF</button>
-			<button class="dropMenu dropQ1" id="dropQ1" onClick="setJahrgang(this.id); signIn()">Q1</button>
-			<button class="dropMenu dropQ2" id="dropQ2" onClick="setJahrgang(this.id); signIn()">Q2</button>
-			<script>
-				function dropDown(){
-					var block = document.getElementById("dropEF").style.display;
-					if(block!="block"){
-						document.getElementById("dropEF").style.display="block";
-						document.getElementById("dropQ1").style.display="block";
-						document.getElementById("dropQ2").style.display="block";
-						
-						document.getElementById("selectBtn").style['border-bottom-left-radius']="0px";
-						document.getElementById("selectBtn").style['border-bottom-right-radius']="0px";
-						
-						document.getElementById("imgDrop").className="fade-out";
-						document.getElementById("imgDrop").src="dropup.png";
-						document.getElementById("imgDrop").className="fade-in";
-					}else{
-						document.getElementById("dropEF").style.display="none";
-						document.getElementById("dropQ1").style.display="none";
-						document.getElementById("dropQ2").style.display="none";
-						
-						document.getElementById("selectBtn").style['border-bottom-left-radius']="4px";
-						document.getElementById("selectBtn").style['border-bottom-right-radius']="4px";
-						
-						document.getElementById("imgDrop").className="fade-out";
-						document.getElementById("imgDrop").src="dropdown.png";
-						document.getElementById("imgDrop").className="fade-in";
-					}
-				}
-				
-				function setJahrgang(clicked_id){
-					document.getElementById("stufe").innerHTML = clicked_id;
-				}
-			</script>
-			<div id="stufe" style="display:none">dropEF</div>
+</head>
+<body>
+
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>Page Title</h1>
+		<a href="#leftpanel1" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini">Overlay</a>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<div id="conTable">
+			<table id="table"></table>
 		</div>
-	</header>
-	
-	<div class="content" id="content"></div>
-	<div id="conTable"></div>
-	<div id="conAcc" style="display:block">
-		<input type="text" id="uName" placeholder="Benutzername"></input>
-		<input type="text" id="pwd"placeholder="Passwort"></input>
-		<button id="subBtn" onclick="signIn(); setStorage()">Login</button>
 		
-		<span>
-			<br />
-			<br />
-			Tip: <br />Installiere diese WebApp auf deinem iOS-Gerät mit klick auf&nbsp <img src="action-icon-ios7.png" height="20"/> &nbsp"Zum Startbildschrim hinzufügen" um sie optimal nutzen zu können.
-		</span>
+		<div id="conAcc">
+			<input type="text" id="uName" placeholder="Benutzername"></input>
+			<input type="text" id="pwd"placeholder="Passwort"></input>
+			<button id="subBtn" onclick="signIn(); setStorage()">Login</button>
+		</div>
+		
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a onclick="signIn('ef')" class="ui-btn-active">EF</a></li>
+				<li><a onclick="signIn('q1')">Q1</a></li>
+				<li><a onclick="signIn('q2')">Q2</a></li>
+			</ul>
+		</div><!-- /navbar -->
 	</div>
 	
+	<!-- leftpanel1  -->
+	<div data-role="panel" id="leftpanel1" data-position="left" data-display="overlay" data-theme="a">
+
+        <h3>Vertretungsplan</h3>
+        <ul>
+			<li><a href="#">Vertretungsplan</a></li>
+			<li><a onclick="loginForm()">Account</a></li>
+			<li><a href="#">Info</a></li>
+        <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
+
+	</div><!-- /leftpanel1 -->
 	
-	<script type="text/javascript">
-	function signIn(){
+</div><!-- /page -->
+
+<script type="text/javascript">
+	function signIn(jahrgang){
 	
 		document.getElementById("conAcc").style.display="none";
 	
 	//firebase.auth().signOut();
-		var email = document.getElementById('uName').value + "@example.com";
+		
+		var email= document.getElementById('uName').value + "@example.com";
         var pwd = document.getElementById('pwd').value;
+		
+		if(email==null||pwd==null||email=="@example.com"||pwd==""){
+			email= localStorage.getItem("email");
+			pwd= localStorage.getItem("pwd");
+			
+			document.getElementById('uName').value=email;
+			document.getElementById('pwd').value=pwd;
+		}
 		
 		
 		firebase.auth().signInWithEmailAndPassword(email, pwd).catch(function(error) {
@@ -112,77 +105,76 @@
           // [END_EXCLUDE]
         });
 		
-		var user = firebase.auth().currentUser;
-		var uid;
-		if(user){
-			uid = user.uid;
-		}
-		
-		firebase.database().ref('users/' + uid + '/').on('value', function(snapshot) {
-		var data = snapshot.val();
+		var auth = firebase.auth();
+
+		auth.onAuthStateChanged(function(user) {
+		  if (user) {
+			//alert('Geht');
+			var uid = user.uid;
 			
-			var myTable = "<table id='table'>";
-			var jahrgang = document.getElementById("stufe").innerHTML;
-			switch(jahrgang){
-				case "dropEF":
-					var stufe = data.EF;
-					break;
-				case "dropQ1":
-					var stufe = data.Q1;
-					break;
-				case "dropQ2":
-					var stufe = data.Q2;
-					break;
+			if(user){
+				uid = user.uid;
 			}
 			
-			var datum = "99.99";
-			for(var i=1;i<=stufe.length-1; i++){
-				var obj = stufe[i];
-				if(datum != obj.Datum){
-					myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
-					myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
-					
-					myTable+= "<tr><td>"+obj.Fach+"</td>";
-					myTable+= "<td>"+obj.Stunde+"</td>";
-					myTable+= "<td>"+obj.Vertreter+"</td>";
-					myTable+= "<td>"+obj.Raum+"</td>";
-					if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
-						myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
-					}else{
-						myTable+= "<td>&nbsp</td></tr>";
-					}
+			firebase.database().ref('users/' + uid + '/').on('value', function(snapshot) {
+			var data = snapshot.val();
+				
+				var myTable = "";
+				switch(jahrgang){
+					case "ef":
+						var stufe = data.EF;
+						break;
+					case "q1":
+						var stufe = data.Q1;
+						break;
+					case "q2":
+						var stufe = data.Q2;
+						break;
 				}
-				else{
-					myTable+= "<tr><td>"+obj.Fach+"</td>";
-					myTable+= "<td>"+obj.Stunde+"</td>";
-					myTable+= "<td>"+obj.Vertreter+"</td>";
-					myTable+= "<td>"+obj.Raum+"</td>";
-					if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
-						myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
-					}else{
-						myTable+= "<td>&nbsp</td></tr>";
+				
+				var datum = "99.99";
+				for(var i=1;i<=stufe.length-1; i++){
+					var obj = stufe[i];
+					if(datum != obj.Datum){
+						myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
+						myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
+						
+						myTable+= "<tr><td>"+obj.Fach+"</td>";
+						myTable+= "<td>"+obj.Stunde+"</td>";
+						myTable+= "<td>"+obj.Vertreter+"</td>";
+						myTable+= "<td>"+obj.Raum+"</td>";
+						if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+							myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+						}else{
+							myTable+= "<td>&nbsp</td></tr>";
+						}
 					}
+					else{
+						myTable+= "<tr><td>"+obj.Fach+"</td>";
+						myTable+= "<td>"+obj.Stunde+"</td>";
+						myTable+= "<td>"+obj.Vertreter+"</td>";
+						myTable+= "<td>"+obj.Raum+"</td>";
+						if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+							myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+						}else{
+							myTable+= "<td>&nbsp</td></tr>";
+						}
+					}
+					datum = obj.Datum;
 				}
-				datum = obj.Datum;
-			}
-			myTable+="</table>";
-			document.getElementById("conTable").innerHTML = myTable;
+				document.getElementById("table").innerHTML = myTable;
+			});
+			
+		  } else {
+			// User logged out
+		  }
 		});
-	}
-	
-	function startup(){
-	var email = localStorage.getItem(email);
-		if(typeof email === "undefined" || email === null){
-			signIn();
-		}
+		
+		
 	}
 	
 	function loginForm(){
-		//document.getElementById("uName").style.display="block";
-		//document.getElementById("pwd").style.display="block";
-		//document.getElementById("subBtn").style.display="block";
-		document.getElementById("conAcc").style.display="block";
-		
+		document.getElementById("conAcc").style.display="block";	
 		document.getElementById("table").style.display="none";
 	}
 	
@@ -190,26 +182,11 @@
 		localStorage.setItem("email", document.getElementById('uName').value + "@example.com");
 		localStorage.setItem("pwd", document.getElementById('pwd').value);
 	}
+	
+	$(document).ready(function(){
+		signIn("ef");
+		});
 	</script>
-	
-	<footer>
-	
-		
-		<div class="vPlan">
-			<button class="footerBtn vPlanBtn" onClick="signIn()">Vertretungsplan</button>
-		</div>
-		
-		
-		<div class="acc" >
-			<button class="footerBtn accBtn" onclick="loginForm()">Account</button>
-		</div>
-		
-		
-		<div class="info">
-			<button class="footerBtn infoBtn">Info</button>
-		</div>
-		
-	
-	</footer>
-  </body>
+
+</body>
 </html>
