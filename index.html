@@ -47,12 +47,19 @@
 			<h2>Login</h2>
 			<input type="text" id="uName" placeholder="Benutzername"></input>
 			<input type="password" id="pwd"placeholder="Passwort"></input>
+			<select id="dropJahrgang">
+				<option selected disabled>Jahrgangsstufe</option>
+				<option>ef</option>
+				<option>q1</option>
+				<option>q2</option>
+			</select>
 			<button id="subBtn" onclick="signIn('ef')">Login</button>
 			
 			<br />
 			<h2>Fächer</h2>
+			<div id="conFacher"></div>
 			<input id="addFachInput" type="text" placeholder="Kurskurzel: z.B. 'E EFa'"></input>
-			<button id="addFach" onclick="addFach()">Login</button>
+			<button id="addFach" onclick="addFach()">Hinzufügen</button>
 			<button id="addFach" onclick="removeFach()">Löschen</button>
 		</div>
 		
@@ -61,7 +68,7 @@
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a onclick="signIn('ef', true)"><img src='ic_person_black_24dp_1x.png'/></a></li>
+				<li><a onclick="signIn(getStufe(), true)"><img src='ic_person_black_24dp_1x.png'/></a></li>
 				<li><a onclick="signIn('ef', false)" class="ui-btn-active" style="font-size:17px">EF</a></li>
 				<li><a onclick="signIn('q1', false)" style="font-size:17px">Q1</a></li>
 				<li><a onclick="signIn('q2', false)" style="font-size:17px">Q2</a></li>
@@ -75,7 +82,7 @@
         <h3>Vertretungsplan</h3>
         <ul>
 			<li><a href="#">Vertretungsplan</a></li>
-			<li><a onclick="loginForm()">Account</a></li>
+			<li><a onclick="loginForm(); showFacher()">Account</a></li>
 			<li><a href="#">Info</a></li>
         <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
 
@@ -215,6 +222,9 @@
 							datum = obj.Datum;
 					}
 				}
+				if(personal&&(facher==null||facher==""||facher=="[]")){
+					myTable+="<tr><td>Füge deine Fächer unter Account hinzu!</td></tr>";
+				}
 				document.getElementById("table").innerHTML = myTable;
 				document.getElementById("table").style.display="table";
 				
@@ -229,6 +239,20 @@
 		
 	}
 	
+	function showFacher(){
+		var output = "Aktuelle Fächer:<ul>";
+		var facher=[];
+		facher=JSON.parse(localStorage.getItem("facher"));
+		if(facher!=null){
+			for(var i=0;i<facher.length;i++){
+				var fach=facher[i];
+				output+="<li>"+fach+"</li>";
+			}
+		}
+		output += "</ul>"
+		document.getElementById("conFacher").innerHTML=output;
+	}
+	
 	function addFach(){
 		var facher=[];
 		facher=JSON.parse(localStorage.getItem("facher"));
@@ -239,6 +263,7 @@
 			facher.push(document.getElementById('addFachInput').value);
 		}
 		localStorage.setItem("facher", JSON.stringify(facher));
+		
 	}
 	
 	function removeFach(){
@@ -263,6 +288,16 @@
 	function setStorage(){
 		localStorage.setItem("email", document.getElementById('uName').value);
 		localStorage.setItem("pwd", document.getElementById('pwd').value);
+		
+		if($("#dropJahrgang :selected").text()=="Jahrgangsstufe"){
+		}else{
+		localStorage.setItem("stufe", $("#dropJahrgang :selected").text());
+		}
+	}
+	
+	function getStufe(){
+		stufe=localStorage.getItem("stufe");
+		return stufe;
 	}
 	
 	$(document).ready(function(){
