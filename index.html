@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Page Title</title>
+	<meta charset="utf-8"/>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -43,9 +44,16 @@
 		</div>
 	
 		<div id="conAcc">
+			<h2>Login</h2>
 			<input type="text" id="uName" placeholder="Benutzername"></input>
 			<input type="password" id="pwd"placeholder="Passwort"></input>
 			<button id="subBtn" onclick="signIn('ef')">Login</button>
+			
+			<br />
+			<h2>Fächer</h2>
+			<input id="addFachInput" type="text" placeholder="Kurskurzel: z.B. 'E EFa'"></input>
+			<button id="addFach" onclick="addFach()">Login</button>
+			<button id="addFach" onclick="removeFach()">Löschen</button>
 		</div>
 		
 	</div><!-- /content -->
@@ -53,9 +61,10 @@
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a onclick="signIn('ef')" class="ui-btn-active">EF</a></li>
-				<li><a onclick="signIn('q1')">Q1</a></li>
-				<li><a onclick="signIn('q2')">Q2</a></li>
+				<li><a onclick="signIn('ef', true)">Pe</a></li>
+				<li><a onclick="signIn('ef', false)" class="ui-btn-active">EF</a></li>
+				<li><a onclick="signIn('q1', false)">Q1</a></li>
+				<li><a onclick="signIn('q2', false)">Q2</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -75,7 +84,7 @@
 </div><!-- /page -->
 
 <script type="text/javascript">
-	function signIn(jahrgang){
+	function signIn(jahrgang, personal){
 	
 		document.getElementById("conAcc").style.display="none";
 	
@@ -85,14 +94,15 @@
         var pwd = document.getElementById('pwd').value;
 		
 		if(email==null||pwd==null||email=="@example.com"||pwd==""){
-			email= localStorage.getItem("email")+"@example.com";
+			uName=localStorage.getItem("email");
+			email= uName+"@example.com";
 			pwd= localStorage.getItem("pwd");
 			
 			if(email==null||pwd==null){
 				document.getElementById('conTable').value = "Bitte log dich mit deinen Zugangsdaten ein.";
 			}
 			
-			document.getElementById('uName').value=email;
+			document.getElementById('uName').value=uName;
 			document.getElementById('pwd').value=pwd;
 		}
 		
@@ -140,32 +150,70 @@
 				var datum = "99.99";
 				for(var i=1;i<=stufe.length-1; i++){
 					var obj = stufe[i];
-					if(datum != obj.Datum){
-						myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
-						myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
-						
-						myTable+= "<tr><td>"+obj.Fach+"</td>";
-						myTable+= "<td>"+obj.Stunde+"</td>";
-						myTable+= "<td>"+obj.Vertreter+"</td>";
-						myTable+= "<td>"+obj.Raum+"</td>";
-						if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
-							myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
-						}else{
-							myTable+= "<td>&nbsp</td></tr>";
+					if(personal){
+						var facher = [];
+						facher = JSON.parse(localStorage.getItem("facher"));
+						for(var j=0;j<facher.length;j++){
+							var fach = facher[j];
+							if(obj.Fach == fach){
+								if(datum != obj.Datum){
+									myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
+									myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
+									
+									myTable+= "<tr><td>"+obj.Fach+"</td>";
+									myTable+= "<td>"+obj.Stunde+"</td>";
+									myTable+= "<td>"+obj.Vertreter+"</td>";
+									myTable+= "<td>"+obj.Raum+"</td>";
+									if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+										myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+									}else{
+										myTable+= "<td>&nbsp</td></tr>";
+									}
+								}
+								else{
+									myTable+= "<tr><td>"+obj.Fach+"</td>";
+									myTable+= "<td>"+obj.Stunde+"</td>";
+									myTable+= "<td>"+obj.Vertreter+"</td>";
+									myTable+= "<td>"+obj.Raum+"</td>";
+									if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+										myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+									}else{
+										myTable+= "<td>&nbsp</td></tr>";
+									}
+								}
+								datum = obj.Datum;
+							}
+
 						}
+					}else{
+						if(datum != obj.Datum){
+								myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
+								myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
+								
+								myTable+= "<tr><td>"+obj.Fach+"</td>";
+								myTable+= "<td>"+obj.Stunde+"</td>";
+								myTable+= "<td>"+obj.Vertreter+"</td>";
+								myTable+= "<td>"+obj.Raum+"</td>";
+								if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+									myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+								}else{
+									myTable+= "<td>&nbsp</td></tr>";
+								}
+							}
+							else{
+								myTable+= "<tr><td>"+obj.Fach+"</td>";
+								myTable+= "<td>"+obj.Stunde+"</td>";
+								myTable+= "<td>"+obj.Vertreter+"</td>";
+								myTable+= "<td>"+obj.Raum+"</td>";
+								if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+									myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+								}else{
+									myTable+= "<td>&nbsp</td></tr>";
+								}
+							}
+							datum = obj.Datum;
+							datum = obj.Datum;
 					}
-					else{
-						myTable+= "<tr><td>"+obj.Fach+"</td>";
-						myTable+= "<td>"+obj.Stunde+"</td>";
-						myTable+= "<td>"+obj.Vertreter+"</td>";
-						myTable+= "<td>"+obj.Raum+"</td>";
-						if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
-							myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
-						}else{
-							myTable+= "<td>&nbsp</td></tr>";
-						}
-					}
-					datum = obj.Datum;
 				}
 				document.getElementById("table").innerHTML = myTable;
 				document.getElementById("table").style.display="table";
@@ -179,6 +227,32 @@
 		});
 		
 		
+	}
+	
+	function addFach(){
+		var facher=[];
+		facher=JSON.parse(localStorage.getItem("facher"));
+		
+		if(facher==null){
+			facher=[document.getElementById('addFachInput').value];
+		}else{
+			facher.push(document.getElementById('addFachInput').value);
+		}
+		localStorage.setItem("facher", JSON.stringify(facher));
+	}
+	
+	function removeFach(){
+		var facher=[];
+		facher=JSON.parse(localStorage.getItem("facher"));
+		if(facher!=null){
+			for(var i=0;i<facher.length;i++){
+				var fach=facher[i];
+				if(fach==document.getElementById('addFachInput').value){
+					facher.splice(i, 1);
+					localStorage.setItem("facher", JSON.stringify(facher));
+				}
+			}
+		}
 	}
 	
 	function loginForm(){
