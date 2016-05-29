@@ -53,7 +53,7 @@
 				<option>q1</option>
 				<option>q2</option>
 			</select>
-			<button id="subBtn" onclick="signIn('ef')">Login</button>
+			<button id="subBtn" onclick="signIn(getStufe(), false)">Login</button>
 			
 			<br />
 			<h2>Fächer</h2>
@@ -97,13 +97,16 @@
 	
 		//firebase.auth().signOut();
 		
+		var uName = document.getElementById('uName').value;
 		var email= document.getElementById('uName').value + "@example.com";
         var pwd = document.getElementById('pwd').value;
+		var stufe = $("#dropJahrgang :selected").text();
 		
 		if(email==null||pwd==null||email=="@example.com"||pwd==""){
 			uName=localStorage.getItem("email");
 			email= uName+"@example.com";
 			pwd= localStorage.getItem("pwd");
+			stufe = getStufe();
 			
 			if(email==null||pwd==null){
 				document.getElementById('conTable').value = "Bitte log dich mit deinen Zugangsdaten ein.";
@@ -111,6 +114,13 @@
 			
 			document.getElementById('uName').value=uName;
 			document.getElementById('pwd').value=pwd;
+			
+			$("#dropJahrgang :selected").text(stufe);
+			
+		}
+		
+		if(stufe=="Jahrgangsstufe"||stufe==""){
+				alert("Bitte gib deine Jahrgangsstufe an.");
 		}
 		
 		
