@@ -172,7 +172,7 @@
 						facher = JSON.parse(localStorage.getItem("facher"));
 						for(var j=0;j<facher.length;j++){
 							var fach = facher[j];
-							if(obj.Fach == fach){
+							if(obj.Fach.toUpperCase() == fach.toUpperCase()){
 								if(datum != obj.Datum){
 									myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
 									myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
