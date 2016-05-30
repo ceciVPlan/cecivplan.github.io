@@ -5,6 +5,15 @@
 	<meta charset="utf-8"/>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!--Apple Stuff-->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!--/Apple Stuff-->
+	
+	<!--Android Stuff-->
+	<link rel="manifest" href="manifest.json">
+	<!--/Android Stuff-->
 
 	<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css">
 	<link rel="stylesheet" href="dark.min.css">
@@ -36,9 +45,12 @@
 		<h1>Vertretungsplan</h1>
 		<!--<a href="#leftpanel1" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini">Overlay</a>-->
 		<a href="#leftpanel1" data-role="none"><img src="nav.png" height=33 /></a>
+
+		
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
+		
 		<div id="conTable">
 			<table id="table"></table>
 		</div>
@@ -249,6 +261,9 @@
 		
 	}
 	
+	
+	
+	
 	function showFacher(){
 		var output = "Aktuelle Fächer:<ul>";
 		var facher=[];
@@ -310,9 +325,32 @@
 		return stufe;
 	}
 	
+	function disableFirst(){
+		localStorage.setItem("first", "first");
+		document.getElementById("first").style.display="none";
+	}
+	
 	$(document).ready(function(){
+		//first Start:
+		var first=localStorage.getItem("first");
+		if(window.navigator.standalone == true) {
+		}else{
+			if(first != "first"){
+				document.getElementById("conAcc").style.display="none";
+				var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+				//if(iOS){
+					document.getElementById("conTable").innerHTML += "<div id='first'><h2>App installieren: </h2>Bitte installiere diese App mit Klick auf <img src='action-icon-ios7.png' height='20'/> und dann \'Zum Home-Bildschirm\'<br /> <a onclick='disableFirst()'>Ich möchte diese Nachricht nicht mehr sehen</a></div";
+				//}
+			}
+		}
+	
+	
 		signIn("ef");
 		});
+	
+	
+		
+		
 	</script>
 
 </body>
