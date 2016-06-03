@@ -39,7 +39,7 @@
 
     // This is the unique name for the cache controlled by this version of the worker.
     get CACHE_NAME() {
-      return this.CACHE_PREFIX + '26df5890bf20e00271c56eff95419990f23ff7b6';
+      return this.CACHE_PREFIX + 'c41adb773d4083e03f2dd08f8353fe3b96f25d57';
     },
 
     // This is a list of resources that will be cached.
@@ -53,7 +53,7 @@
       'gulpfile.js', // ae852d357c290c3e938f395ed7913129d9dc94a0
       'ic_launcher.png', // 96f4c511385923454a75fff29f371b7ce5370b35
       'ic_person_black_24dp_1x.png', // 02eee5f36d71a697741104f174d1b52695d21979
-      'index.html', // 26ee85d60bee362f8b86e75a27faf57cfde75b57
+      'index.html', // 581de7c1794cb7d6dabf817d3a6f0df1c7eb98e0
       'jquery.min.js', // b14a228c3632ebfe3d20e5ea830ceea313523353
       'jquery.mobile-1.4.5.min.css', // 8897f68fffc72c72fca51a5c59454c966283d381
       'jquery.mobile-1.4.5.min.js', // fc55d367c7272bdde8070f851af4584bbc10b2e8
