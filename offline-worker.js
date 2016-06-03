@@ -39,21 +39,21 @@
 
     // This is the unique name for the cache controlled by this version of the worker.
     get CACHE_NAME() {
-      return this.CACHE_PREFIX + 'c41adb773d4083e03f2dd08f8353fe3b96f25d57';
+      return this.CACHE_PREFIX + 'f39b05426ee159a14ebc8a70b1e9680ba1562532';
     },
 
     // This is a list of resources that will be cached.
     RESOURCES: [
       'action-icon-ios7.png', // 0360cd1a97f42e386fd889c3e3f8c5c23c552916
       'CNAME', // 7467717f9f20770caf605b6c85d80fd3baf28dfb
-      'dark.min.css', // 1b652764ec2d30cf3d5e31388f9246a2088436ef
+      'dark.min.css', // a482972530c477660082f36d12c312e67612330e
       'dropdown.png', // 2ef71158816732d7803766d54344939c7abe7088
       'dropup.png', // 1679b1b3bea5d1c216361f85d2d54d45914092a5
       'firststart.html', // 55ba600c2d9d30e1a786bd436f7cacf6733c32c2
       'gulpfile.js', // ae852d357c290c3e938f395ed7913129d9dc94a0
       'ic_launcher.png', // 96f4c511385923454a75fff29f371b7ce5370b35
       'ic_person_black_24dp_1x.png', // 02eee5f36d71a697741104f174d1b52695d21979
-      'index.html', // 581de7c1794cb7d6dabf817d3a6f0df1c7eb98e0
+      'index.html', // bf9dca8932dec6159e1ca995797026ca59f105dd
       'jquery.min.js', // b14a228c3632ebfe3d20e5ea830ceea313523353
       'jquery.mobile-1.4.5.min.css', // 8897f68fffc72c72fca51a5c59454c966283d381
       'jquery.mobile-1.4.5.min.js', // fc55d367c7272bdde8070f851af4584bbc10b2e8
