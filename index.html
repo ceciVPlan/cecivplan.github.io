@@ -138,8 +138,6 @@
 				document.getElementById('conWarn').innerHTML += "<h2> Fehler</h2>Gib deine Jahrgangsstufe an";
 		}
 		
-		alert(navigator.onLine)
-		
 		
 		firebase.auth().signInWithEmailAndPassword(email, pwd).catch(function(error) {
           // Handle Errors here.
@@ -156,41 +154,72 @@
 		
 		var auth = firebase.auth();
 
-		auth.onAuthStateChanged(function(user) {
-		  if (user) {
-			//alert('Geht');
-			var uid = user.uid;
-			
-			if(user){
-				uid = user.uid;
-			}
-			
-			firebase.database().ref('users/' + uid + '/').on('value', function(snapshot) {
-			var data = snapshot.val();
+		
+		if(navigator.onLine){
+			auth.onAuthStateChanged(function(user) {
+				if (user) {
+				//alert('Geht');
+				var uid = user.uid;
 				
-				var myTable = "";
-				switch(jahrgang){
-					case "ef":
-						var stufe = data.EF;
-						break;
-					case "q1":
-						var stufe = data.Q1;
-						break;
-					case "q2":
-						var stufe = data.Q2;
-						break;
+				if(user){
+					uid = user.uid;
 				}
-				
-				var datum = "99.99";
-				for(var i=1;i<=stufe.length-1; i++){
-					var obj = stufe[i];
-					if(personal){
-						var facher = [];
-						facher = JSON.parse(localStorage.getItem("facher"));
-						for(var j=0;j<facher.length;j++){
-							var fach = facher[j];
-							if(obj.Fach.toUpperCase() == fach.toUpperCase()){
-								if(datum != obj.Datum){
+				firebase.database().ref('users/' + uid + '/').on('value', function(snapshot) {
+				var data = snapshot.val();
+					
+					var myTable = "";
+					switch(jahrgang){
+						case "ef":
+							var stufe = data.EF;
+							break;
+						case "q1":
+							var stufe = data.Q1;
+							break;
+						case "q2":
+							var stufe = data.Q2;
+							break;
+					}
+					
+					var datum = "99.99";
+					for(var i=1;i<=stufe.length-1; i++){
+						var obj = stufe[i];
+						if(personal){
+							var facher = [];
+							facher = JSON.parse(localStorage.getItem("facher"));
+							for(var j=0;j<facher.length;j++){
+								var fach = facher[j];
+								if(obj.Fach.toUpperCase() == fach.toUpperCase()){
+									if(datum != obj.Datum){
+										myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
+										myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
+										
+										myTable+= "<tr><td>"+obj.Fach+"</td>";
+										myTable+= "<td>"+obj.Stunde+"</td>";
+										myTable+= "<td>"+obj.Vertreter+"</td>";
+										myTable+= "<td>"+obj.Raum+"</td>";
+										if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+											myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+										}else{
+											myTable+= "<td>&nbsp</td></tr>";
+										}
+									}
+									else{
+										myTable+= "<tr><td>"+obj.Fach+"</td>";
+										myTable+= "<td>"+obj.Stunde+"</td>";
+										myTable+= "<td>"+obj.Vertreter+"</td>";
+										myTable+= "<td>"+obj.Raum+"</td>";
+										if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+											myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+										}else{
+											myTable+= "<td>&nbsp</td></tr>";
+										}
+									}
+									datum = obj.Datum;
+								}
+
+							}
+						}else{
+							if(datum != obj.Datum){
 									myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
 									myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
 									
@@ -216,55 +245,33 @@
 									}
 								}
 								datum = obj.Datum;
-							}
-
+								datum = obj.Datum;
 						}
-					}else{
-						if(datum != obj.Datum){
-								myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
-								myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
-								
-								myTable+= "<tr><td>"+obj.Fach+"</td>";
-								myTable+= "<td>"+obj.Stunde+"</td>";
-								myTable+= "<td>"+obj.Vertreter+"</td>";
-								myTable+= "<td>"+obj.Raum+"</td>";
-								if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
-									myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
-								}else{
-									myTable+= "<td>&nbsp</td></tr>";
-								}
-							}
-							else{
-								myTable+= "<tr><td>"+obj.Fach+"</td>";
-								myTable+= "<td>"+obj.Stunde+"</td>";
-								myTable+= "<td>"+obj.Vertreter+"</td>";
-								myTable+= "<td>"+obj.Raum+"</td>";
-								if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
-									myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
-								}else{
-									myTable+= "<td>&nbsp</td></tr>";
-								}
-							}
-							datum = obj.Datum;
-							datum = obj.Datum;
 					}
-				}
-				if(personal&&(facher==null||facher==""||facher=="[]")){
-					myTable+="<tr><td>Füge deine Fächer unter Account hinzu!</td></tr>";
-				}
-				document.getElementById("table").innerHTML = myTable;
-				document.getElementById("table").style.display="table";
-				document.getElementById("conWarn").style.display="none";
-				
-				setStorage();
-			});
+					if(personal&&(facher==null||facher==""||facher=="[]")){
+						myTable+="<tr><td>Füge deine Fächer unter Account hinzu!</td></tr>";
+					}
+					document.getElementById("table").innerHTML = myTable;
+					document.getElementById("table").style.display="table";
+					document.getElementById("conWarn").style.display="none";
+					
+					localStorage.setItem("vPlan" + jahrgang, myTable);
+					
+					setStorage();
+				});
 			
-		  } else {
-			// User logged out
-		  }
-		});
+			} else {
+				// User logged out
+			}
+			});
+		//Ende Online-Mode
 		
 		
+		
+		}
+		else{
+			document.getElementById("table").innerHTML = localStorage.getItem("vPlan"+jahrgang);
+		}
 	}
 	
 	
