@@ -21,7 +21,8 @@
 	<!--<script src="demos/_assets/js/index.js"></script>-->
 	<script src="jquery.mobile-1.4.5.min.js"></script>
 	
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+	<!--If Nothing Works enable!-->
+	<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>-->
 	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 	<script>
 	  // Initialize Firebase
@@ -91,14 +92,18 @@
 	</div>
 	
 	<!-- leftpanel1  -->
-	<div data-role="panel" id="leftpanel1" data-position="left" data-display="overlay" data-theme="a">
+	<div data-role="panel" id="leftpanel1" data-position="left" data-display="overlay" data-theme="a" class="panelBtn">
 
-        <h3>Vertretungsplan</h3>
-        <ul>
-			<li><a href="#">Vertretungsplan</a></li>
-			<li><a onclick="loginForm(); showFacher()">Account</a></li>
-			<li><a href="#">Info</a></li>
-        <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
+        <div class="panelHead">
+		<img src="ic_launcher.png" /> 
+			<h3>Vertretungsplan</h3>
+		</div>
+		<a onclick="signIn('ef', false)" class="panelBtn">Vertretungsplan</a>
+		<br /><hr />
+		<a onclick="loginForm(); showFacher()" class="panelBtn">Account</a>
+		<br /><hr />
+		<a href="#" class="panelBtn">Info</a>
+        <!--<a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>-->
 
 	</div><!-- /leftpanel1 -->
 	
