@@ -241,3 +241,10 @@ html .ui-alt-icon .ui-radio-off:after {
 	min-height: 100px;
 	color: #000000;
 }
+.delButton{
+	background-color: rgba(0,0,0,0);
+	outline:0;
+	border:0;
+	color: #FF0000;
+	font-size: 14px;
+}

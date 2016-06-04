@@ -75,7 +75,6 @@
 			<div id="conFacher"></div>
 			<input id="addFachInput" type="text" placeholder="Kurskurzel: z.B. 'E EFa'"></input>
 			<button id="addFach" onclick="addFach()">Hinzufügen</button>
-			<button id="addFach" onclick="removeFach()">Löschen</button>
 		</div>
 		
 	</div><!-- /content -->
@@ -191,37 +190,42 @@
 						if(personal){
 							var facher = [];
 							facher = JSON.parse(localStorage.getItem("facher"));
-							for(var j=0;j<facher.length;j++){
-								var fach = facher[j];
-								if(obj.Fach.toUpperCase() == fach.toUpperCase()){
-									if(datum != obj.Datum){
-										myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
-										myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
-										
-										myTable+= "<tr><td>"+obj.Fach+"</td>";
-										myTable+= "<td>"+obj.Stunde+"</td>";
-										myTable+= "<td>"+obj.Vertreter+"</td>";
-										myTable+= "<td>"+obj.Raum+"</td>";
-										if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
-											myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
-										}else{
-											myTable+= "<td>&nbsp</td></tr>";
+							
+							if(facher==null || facher.length == 0){
+								myTable ="<tr><td>Füge deine Fächer unter Account hinzu!</td></tr>";
+							}else{
+								
+								for(var j=0;j<facher.length;j++){
+									var fach = facher[j];
+									if(obj.Fach.toUpperCase() == fach.toUpperCase()){
+										if(datum != obj.Datum){
+											myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
+											myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
+											
+											myTable+= "<tr><td>"+obj.Fach+"</td>";
+											myTable+= "<td>"+obj.Stunde+"</td>";
+											myTable+= "<td>"+obj.Vertreter+"</td>";
+											myTable+= "<td>"+obj.Raum+"</td>";
+											if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+												myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+											}else{
+												myTable+= "<td>&nbsp</td></tr>";
+											}
 										}
-									}
-									else{
-										myTable+= "<tr><td>"+obj.Fach+"</td>";
-										myTable+= "<td>"+obj.Stunde+"</td>";
-										myTable+= "<td>"+obj.Vertreter+"</td>";
-										myTable+= "<td>"+obj.Raum+"</td>";
-										if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
-											myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
-										}else{
-											myTable+= "<td>&nbsp</td></tr>";
+										else{
+											myTable+= "<tr><td>"+obj.Fach+"</td>";
+											myTable+= "<td>"+obj.Stunde+"</td>";
+											myTable+= "<td>"+obj.Vertreter+"</td>";
+											myTable+= "<td>"+obj.Raum+"</td>";
+											if(isNaN(obj['Vertretungs-Text']) || obj['Vertretungs-Text'] == " " || obj['Vertretungs-Text'] == "&nbsp"){
+												myTable+= "<td>"+obj['Vertretungs-Text']+"</td></tr>";
+											}else{
+												myTable += "<td>&nbsp</td></tr>";
+											}
 										}
+										datum = obj.Datum;
 									}
-									datum = obj.Datum;
 								}
-
 							}
 						}else{
 							if(datum != obj.Datum){
@@ -253,9 +257,9 @@
 								datum = obj.Datum;
 						}
 					}
-					if(personal&&(facher==null||facher==""||facher=="[]")){
-						myTable+="<tr><td>Füge deine Fächer unter Account hinzu!</td></tr>";
-					}
+					//if(personal&&(facher==null||facher==""||facher=="[]")){
+						//myTable+="<tr><td>Füge deine Fächer unter Account hinzu!</td></tr>";
+					//}
 					document.getElementById("table").innerHTML = myTable;
 					document.getElementById("table").style.display="table";
 					document.getElementById("conWarn").style.display="none";
@@ -289,7 +293,8 @@
 		if(facher!=null){
 			for(var i=0;i<facher.length;i++){
 				var fach=facher[i];
-				output+="<li>"+fach+"</li>";
+				//output+="<li>"+fach+"<button class='delButton' onclick=removeFach("+fach+")>LÖSCHEN</button></li>";
+				output+="<li>"+fach+"<button class='delButton' onclick=\"removeFach(\'"+fach+"\')\">LÖSCHEN</button></li>";
 			}
 		}
 		output += "</ul>"
@@ -306,21 +311,23 @@
 			facher.push(document.getElementById('addFachInput').value);
 		}
 		localStorage.setItem("facher", JSON.stringify(facher));
+		showFacher();
 		
 	}
 	
-	function removeFach(){
+	function removeFach(kurs){
 		var facher=[];
 		facher=JSON.parse(localStorage.getItem("facher"));
 		if(facher!=null){
 			for(var i=0;i<facher.length;i++){
 				var fach=facher[i];
-				if(fach==document.getElementById('addFachInput').value){
+				if(fach==kurs){
 					facher.splice(i, 1);
 					localStorage.setItem("facher", JSON.stringify(facher));
 				}
 			}
 		}
+		showFacher();
 	}
 	
 	function loginForm(){
