@@ -185,7 +185,8 @@
 					}
 					
 					var datum = "99.99";
-					for(var i=1;i<=stufe.length-1; i++){
+					//stufe.length-1 weil das Letzte Feld das Aktualisierungsdatum ist
+					for(var i=1;i<=stufe.length-2; i++){
 						var obj = stufe[i];
 						if(personal){
 							var facher = [];
@@ -256,10 +257,11 @@
 								datum = obj.Datum;
 								datum = obj.Datum;
 						}
+						
 					}
-					//if(personal&&(facher==null||facher==""||facher=="[]")){
-						//myTable+="<tr><td>Füge deine Fächer unter Account hinzu!</td></tr>";
-					//}
+					
+					
+					myTable+="<tr><td id='aktStand'>"+stufe[stufe.length-1].Date+"</td></tr>";
 					document.getElementById("table").innerHTML = myTable;
 					document.getElementById("table").style.display="table";
 					document.getElementById("conWarn").style.display="none";
