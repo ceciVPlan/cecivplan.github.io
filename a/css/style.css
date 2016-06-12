@@ -1,0 +1,25 @@
+/* Empty. Add your own CSS if you like */
+.col{
+  border: 1px solid #808080;
+}
+.col:last-child{
+  border-right: 1px solid black;
+}
+.colD{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 40%;
+}
+/*Set Item-Size in Footer*/
+.barStufe{
+  font-size: 25px !important;
+  bottom: 0;
+  padding-top: 15px;
+}
+.barPers{
+  padding-top: 5px;
+}
+
+.tab-item.tab-item-active, .tab-item.active, .tab-item.activated {
+    color: #0070c9;
+}

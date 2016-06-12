@@ -1,0 +1,30 @@
+<ion-view view-title="Browse">
+  <ion-content>
+    <h1>{{title}}</h1>
+
+    <button class="button button-positive"ng-click="rmFach('E Efa')">Hi</button>
+
+    <div class="card">
+      <div class="=item item-text-wrap">
+        <form ng-submit="addFach()">
+          <label class="item item-input">
+            <input type="text" placeholder="z.B. E EFa" id="facherFach">
+          </label>
+          <button class="button button-positive" type="submit">
+            Hinzufügen
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" ng-repeat="facher in savedFacher" id="facherList">
+      <div class="item item-text-wrap">
+        {{facher}}
+      </div>
+    </div>
+
+    <div class="card" id="facherList">
+    </div>
+
+  </ion-content>
+</ion-view>
