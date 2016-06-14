@@ -80,6 +80,12 @@ td{
 	border: 1px solid rgba(0,0,0,.8);
 	border-collapse: collapse;
 }
+.stunde{
+	min-width: 45px;
+}
+.fach{
+	min-width: 100px;
+}
 #date{
 	border:0;
 	font-size: 1.3em;
