@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest="cache.manifest">
 <head>
 	<title>Page Title</title>
 	<meta charset="utf-8"/>
@@ -77,12 +77,40 @@
 			<button id="addFach" onclick="addFach()">Hinzufügen</button>
 		</div>
 		
+		<div id="conInfo" style="display:none">
+			<h2>Info</h2>
+			Bei Fragen bitte an cecivplan[at]outlook.com schreiben.<br />
+			
+			Diese Webseite stellt den Vertretungsplan des Ceciliengymnasiums dar.<br />
+			Der/Die Eigentümer oder der/die Verantwortliche/n von <a href="http://ceciliengymnasium.de/index.php/vertretungsplan">http://ceciliengymnasium.de/</a> sind nicht Eigentümer dieser Webseite!
+			<br />
+			Es ist nicht garantiert, dass die Daten dieser Seite aktuell sind. Die Daten können mittlerweile veraltet sein (siehe Zeitstempel).
+			<br />
+			
+			<h3>Benutzung</h3>
+			Diese Web-App ist für iOS(Apple) ausgerichtet, kann allerdings auch von jedem anderen Betriebssystem benutzt werden.<br />
+			Für android installier dir bitte die App vom <a href="https://play.google.com/store/apps/details?id=com.github.leonardpieper.ceciVPlan">Google Play Store</a>.<br />
+			Um die App zu installieren drücke auf den Action-Button in Safari und wähle "zum Home-Bildschirm".<br />
+			Der Benutzername sowie das Passwort von <a href="http://ceciliengymnasium.de/index.php/vertretungsplan">http://ceciliengymnasium.de/</a> werden zum Anmelden benötigt.
+			<br />
+			
+			<h3>Lizenz</h3>
+			<i>
+				Ceci Vertretungsplan<br />
+				Copyright (C) 2016 Leonard Pieper<br /><br />
+
+				Dieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.<br />
+
+				Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License
+			</i>
+		</div>
+		
 	</div><!-- /content -->
 
-	<div data-role="footer" data-position="fixed" tap-data-toggle="false">
+	<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 		<div data-role="navbar">
 			<ul>
-				<li><a onclick="signIn(getStufe(), true)"><img src='ic_person_black_24dp_1x.png'/></a></li>
+				<li><a onclick="signIn(getStufe(), true)" ><img src='ic_person_black_24dp_1x.png'/></a></li>
 				<li><a onclick="signIn('ef', false)" class="ui-btn-active" style="font-size:17px">EF</a></li>
 				<li><a onclick="signIn('q1', false)" style="font-size:17px">Q1</a></li>
 				<li><a onclick="signIn('q2', false)" style="font-size:17px">Q2</a></li>
@@ -97,11 +125,11 @@
 		<img src="ic_launcher.png" /> 
 			<h3>Vertretungsplan</h3>
 		</div>
-		<a onclick="signIn('ef', false)" class="panelBtn">Vertretungsplan</a>
+		<a onclick="signIn('ef', false)" class="panelBtn" data-rel="close">Vertretungsplan</a>
 		<br /><hr />
-		<a onclick="loginForm(); showFacher()" class="panelBtn">Account</a>
+		<a onclick="loginForm(); showFacher()" class="panelBtn" data-rel="close">Account</a>
 		<br /><hr />
-		<a href="#" class="panelBtn">Info</a>
+		<a onclick="info()" class="panelBtn" data-rel="close">Info</a>
         <!--<a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>-->
 
 	</div><!-- /leftpanel1 -->
@@ -112,6 +140,7 @@
 	function signIn(jahrgang, personal){
 	
 		document.getElementById("conAcc").style.display="none";
+		document.getElementById("conInfo").style.display="none";
 	
 		//firebase.auth().signOut();
 		
@@ -335,6 +364,7 @@
 	function loginForm(){
 		document.getElementById("conAcc").style.display="block";	
 		document.getElementById("table").style.display="none";
+		document.getElementById("conInfo").style.display="none";
 	}
 	
 	function setStorage(){
@@ -357,7 +387,20 @@
 		document.getElementById("first").style.display="none";
 	}
 	
+	function info(){
+		document.getElementById("table").style.display="none";
+		document.getElementById("conAcc").style.display="none";
+		document.getElementById("conInfo").style.display="block";
+	}
+	
 	$(document).ready(function(){
+		//Apple Cache Stuff
+		if (window.applicationCache.status == window.applicationCache.UPDATEREADY){
+			window.applicationCache.update();
+			window.applicationCache.swapCache();
+		}
+		
+		
 		//first Start:
 		var first=localStorage.getItem("first");
 		if(window.navigator.standalone == true) {
