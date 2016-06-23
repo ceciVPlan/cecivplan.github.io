@@ -39,7 +39,7 @@
 
     // This is the unique name for the cache controlled by this version of the worker.
     get CACHE_NAME() {
-      return this.CACHE_PREFIX + 'd1373d90e8ec987b2f92396b09bcfb3b30b09159';
+      return this.CACHE_PREFIX + '5b1f26f29465b31fd9c80ccb62c03f213e39fc31';
     },
 
     // This is a list of resources that will be cached.
@@ -121,7 +121,7 @@
       'a/templates/playlists.html', // ade3bd2ca2ca5059e7edf62e85b236340c6a341f
       'a/templates/search.html', // c77a78c39a2e5d973fc6cf5fc6f0b1c64cc7179a
       'action-icon-ios7.png', // 0360cd1a97f42e386fd889c3e3f8c5c23c552916
-      'cache.manifest', // 289ff1b6833e8a2e5721b5e95683d74134f54293
+      'cache.manifest', // 45fb3c55f70a002b28b29d74deecaf658affdd2a
       'CNAME', // 7467717f9f20770caf605b6c85d80fd3baf28dfb
       'dark.min.css', // 0efac0ce3ea332b412fc8dbbcfe1ec20c279727d
       'dropdown.png', // 2ef71158816732d7803766d54344939c7abe7088
@@ -148,7 +148,7 @@
       'public/firebase.json', // 3fc0b879299121fca7b3a77dbffab54cd9ef63c3
       'public/firststart.html', // 55ba600c2d9d30e1a786bd436f7cacf6733c32c2
       'public/gulpfile.js', // ae852d357c290c3e938f395ed7913129d9dc94a0
-      'public/ic_launcher.png', // 96f4c511385923454a75fff29f371b7ce5370b35
+      'public/ic_launcher.png', // f1138a1e4199f6807cbe832814e7c845cbb88b69
       'public/ic_person_black_24dp_1x.png', // 02eee5f36d71a697741104f174d1b52695d21979
       'public/index.html', // b2b330e1e35b79f24002b0319a6c05c82454f99b
       'public/jquery.min.js', // b14a228c3632ebfe3d20e5ea830ceea313523353
@@ -157,7 +157,7 @@
       'public/manifest.json', // 51e8a6114cfa5f940fd1b3bb1b1b88d59632fcae
       'public/nav.png', // 83b3bb63258de0c9dd1d52d7e44485c886829857
       'public/offline-manager.js', // e2e09e000c5b64035940ae44e9c0936eb25ecd51
-      'public/offline-worker.js', // 4fedbf5f6476d510f133bac350e699cb119f505e
+      'public/offline-worker.js', // f8ada6384e094b378f5dff5555bbd3bb047db2a1
       'public/README.md', // b4e817246ea8c6db5c674664e1ce974c851bc977
       'public/style.css', // 88173942a8ac60faaf12f6f300ee98fba4617e17
       'README.md', // b4e817246ea8c6db5c674664e1ce974c851bc977
