@@ -39,32 +39,32 @@
 
     // This is the unique name for the cache controlled by this version of the worker.
     get CACHE_NAME() {
-      return this.CACHE_PREFIX + '408ac68413bde70ca01bf30a608d2a0681e11b6f';
+      return this.CACHE_PREFIX + 'c6e3360f4ca468f789bda3938e58938f433ed2d7';
     },
 
     // This is a list of resources that will be cached.
     RESOURCES: [
-      './404.html', // 4c185a7b907a78e896ba83c4028a87fb3b31b3dd
-      './action-icon-ios7.png', // 0360cd1a97f42e386fd889c3e3f8c5c23c552916
-      './cache.manifest', // 45fb3c55f70a002b28b29d74deecaf658affdd2a
-      './CNAME', // 7467717f9f20770caf605b6c85d80fd3baf28dfb
-      './dark.min.css', // 0efac0ce3ea332b412fc8dbbcfe1ec20c279727d
-      './dropdown.png', // 2ef71158816732d7803766d54344939c7abe7088
-      './dropup.png', // 1679b1b3bea5d1c216361f85d2d54d45914092a5
-      './firebase.json', // 3fc0b879299121fca7b3a77dbffab54cd9ef63c3
-      './firststart.html', // 55ba600c2d9d30e1a786bd436f7cacf6733c32c2
-      './gulpfile.js', // ae852d357c290c3e938f395ed7913129d9dc94a0
-      './ic_launcher.png', // f1138a1e4199f6807cbe832814e7c845cbb88b69
-      './ic_person_black_24dp_1x.png', // 02eee5f36d71a697741104f174d1b52695d21979
-      './index.html', // b2b330e1e35b79f24002b0319a6c05c82454f99b
-      './jquery.min.js', // b14a228c3632ebfe3d20e5ea830ceea313523353
-      './jquery.mobile-1.4.5.min.css', // 8897f68fffc72c72fca51a5c59454c966283d381
-      './jquery.mobile-1.4.5.min.js', // fc55d367c7272bdde8070f851af4584bbc10b2e8
-      './manifest.json', // 51e8a6114cfa5f940fd1b3bb1b1b88d59632fcae
-      './nav.png', // 83b3bb63258de0c9dd1d52d7e44485c886829857
-      './offline-manager.js', // e2e09e000c5b64035940ae44e9c0936eb25ecd51
-      './README.md', // b4e817246ea8c6db5c674664e1ce974c851bc977
-      './style.css', // 88173942a8ac60faaf12f6f300ee98fba4617e17
+      '404.html', // 4c185a7b907a78e896ba83c4028a87fb3b31b3dd
+      'action-icon-ios7.png', // 0360cd1a97f42e386fd889c3e3f8c5c23c552916
+      'cache.manifest', // 45fb3c55f70a002b28b29d74deecaf658affdd2a
+      'CNAME', // 7467717f9f20770caf605b6c85d80fd3baf28dfb
+      'dark.min.css', // 0efac0ce3ea332b412fc8dbbcfe1ec20c279727d
+      'dropdown.png', // 2ef71158816732d7803766d54344939c7abe7088
+      'dropup.png', // 1679b1b3bea5d1c216361f85d2d54d45914092a5
+      'firebase.json', // 3fc0b879299121fca7b3a77dbffab54cd9ef63c3
+      'firststart.html', // 55ba600c2d9d30e1a786bd436f7cacf6733c32c2
+      'gulpfile.js', // ae852d357c290c3e938f395ed7913129d9dc94a0
+      'ic_launcher.png', // f1138a1e4199f6807cbe832814e7c845cbb88b69
+      'ic_person_black_24dp_1x.png', // 02eee5f36d71a697741104f174d1b52695d21979
+      'index.html', // eb4a7f2d401cc323ab4caa26fc7d2ae8009b8f58
+      'jquery.min.js', // b14a228c3632ebfe3d20e5ea830ceea313523353
+      'jquery.mobile-1.4.5.min.css', // 8897f68fffc72c72fca51a5c59454c966283d381
+      'jquery.mobile-1.4.5.min.js', // fc55d367c7272bdde8070f851af4584bbc10b2e8
+      'manifest.json', // 51e8a6114cfa5f940fd1b3bb1b1b88d59632fcae
+      'nav.png', // 83b3bb63258de0c9dd1d52d7e44485c886829857
+      'offline-manager.js', // e2e09e000c5b64035940ae44e9c0936eb25ecd51
+      'README.md', // b4e817246ea8c6db5c674664e1ce974c851bc977
+      'style.css', // 88173942a8ac60faaf12f6f300ee98fba4617e17
 
     ],
 
