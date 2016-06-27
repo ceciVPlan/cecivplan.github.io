@@ -6,15 +6,22 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+
 	<!--Apple Stuff-->
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<link rel="apple-touch-icon" href="/ic_launcher.png">
+	<link rel="apple-touch-icon" href="/iOS_ico.png">
 	<!--/Apple Stuff-->
 
 	<!--Android Stuff-->
 	<link rel="manifest" href="manifest.json">
 	<!--/Android Stuff-->
+
+	<!--Windows-Phone Stuff-->
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/iOS_ico.png"> 
+	<!--/Windows-Phone Stuff-->
 
 	<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css">
 	<link rel="stylesheet" href="dark.min.css">
@@ -61,6 +68,7 @@
 
 		<div id="conAcc">
 			<h2>Login</h2>
+			<p style="border: 1px solid rgba(0,0,0,.8)">In der Testphase kann es passieren, dass es ein paar Stunden dauert, bis die Daten aktualisieren!</p>
 			<input type="text" id="uName" placeholder="Benutzername"></input>
 			<input type="password" id="pwd"placeholder="Passwort"></input>
 			<select id="dropJahrgang">
@@ -123,7 +131,7 @@
 	<div data-role="panel" id="leftpanel1" data-position="left" data-display="overlay" data-theme="a" class="panelBtn">
 
         <div class="panelHead">
-		<img src="ic_launcher.png" />
+		<img src="iOS_ico.png" style="height:100px"/>
 			<h3>Vertretungsplan</h3>
 		</div>
 		<a onclick="signIn('ef', false)" class="panelBtn" data-rel="close">Vertretungsplan</a>
@@ -421,6 +429,17 @@
 
 
 
+
+	</script>
+	
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-74404417-3', 'auto');
+	  ga('send', 'pageview');
 
 	</script>
 
