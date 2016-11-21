@@ -5,12 +5,12 @@
 	<meta charset="utf-8"/>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
 	<!--Apple Stuff-->
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<!--/Apple Stuff-->
-	
+
 	<!--Android Stuff-->
 	<link rel="manifest" href="manifest.json">
 	<!--/Android Stuff-->
@@ -20,7 +20,7 @@
 	<script src="jquery.min.js"></script>
 	<!--<script src="demos/_assets/js/index.js"></script>-->
 	<script src="jquery.mobile-1.4.5.min.js"></script>
-	
+
 	<!--If Nothing Works enable!-->
 	<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>-->
 	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
@@ -34,8 +34,8 @@
 	  };
 	  firebase.initializeApp(config);
 	  var rootRef = firebase.database().ref();
-	  
-	  
+
+
 	</script>
 </head>
 <body>
@@ -47,17 +47,17 @@
 		<!--<a href="#leftpanel1" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini">Overlay</a>-->
 		<a href="#leftpanel1" data-role="none"><img src="nav.png" height=33 /></a>
 
-		
+
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
 		<div id="conWarn">
 		</div>
-		
+
 		<div id="conTable">
 			<table id="table"></table>
 		</div>
-	
+
 		<div id="conAcc">
 			<h2>Login</h2>
 			<input type="text" id="uName" placeholder="Benutzername"></input>
@@ -69,14 +69,14 @@
 				<option>q2</option>
 			</select>
 			<button id="subBtn" onclick="signIn('ef', false)">Login</button>
-			
+
 			<br />
 			<h2>Fächer</h2>
 			<div id="conFacher"></div>
 			<input id="addFachInput" type="text" placeholder="Kurskurzel: z.B. 'E EFa'"></input>
 			<button id="addFach" onclick="addFach()">Hinzufügen</button>
 		</div>
-		
+
 	</div><!-- /content -->
 
 	<div data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -89,12 +89,12 @@
 			</ul>
 		</div><!-- /navbar -->
 	</div>
-	
+
 	<!-- leftpanel1  -->
 	<div data-role="panel" id="leftpanel1" data-position="left" data-display="overlay" data-theme="a" class="panelBtn">
 
         <div class="panelHead">
-		<img src="ic_launcher.png" /> 
+		<img src="ic_launcher.png" />
 			<h3>Vertretungsplan</h3>
 		</div>
 		<a onclick="signIn('ef', false)" class="panelBtn">Vertretungsplan</a>
@@ -105,44 +105,44 @@
         <!--<a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>-->
 
 	</div><!-- /leftpanel1 -->
-	
+
 </div><!-- /page -->
 
 <script type="text/javascript">
 	function signIn(jahrgang, personal){
-	
+
 		document.getElementById("conAcc").style.display="none";
-	
+
 		//firebase.auth().signOut();
-		
+
 		var uName = document.getElementById('uName').value;
 		var email= document.getElementById('uName').value + "@example.com";
         var pwd = document.getElementById('pwd').value;
 		var stufe = $("#dropJahrgang :selected").text();
-		
+
 		if(email==null||pwd==null||email=="@example.com"||pwd==""){
 			uName=localStorage.getItem("email");
 			email= uName+"@example.com";
 			pwd= localStorage.getItem("pwd");
 			stufe = getStufe();
-			
+
 			if(email==null||pwd==null){
 				document.getElementById('conWarn').innerHTML = "<h2>Login</h2>Bitte log dich mit deinen Zugangsdaten ein.";
 			}
-			
+
 			document.getElementById('uName').value=uName;
 			document.getElementById('pwd').value=pwd;
-			
+
 			$("#dropJahrgang :selected").text(stufe);
-			
+
 		}
-		
+
 		if(stufe=="Jahrgangsstufe"||stufe==""||stufe=="null"){
 				alert("Bitte gib deine Jahrgangsstufe an.");
 				document.getElementById('conWarn').innerHTML += "<h2> Fehler</h2>Gib deine Jahrgangsstufe an";
 		}
-		
-		
+
+
 		firebase.auth().signInWithEmailAndPassword(email, pwd).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
@@ -155,22 +155,22 @@
           }
           // [END_EXCLUDE]
         });
-		
+
 		var auth = firebase.auth();
 
-		
+
 		if(navigator.onLine){
 			auth.onAuthStateChanged(function(user) {
 				if (user) {
 				//alert('Geht');
 				var uid = user.uid;
-				
+
 				if(user){
 					uid = user.uid;
 				}
 				firebase.database().ref('users/' + uid + '/').on('value', function(snapshot) {
 				var data = snapshot.val();
-					
+
 					var myTable = "";
 					switch(jahrgang){
 						case "ef":
@@ -183,7 +183,7 @@
 							var stufe = data.Q2;
 							break;
 					}
-					
+
 					var datum = "99.99";
 					//stufe.length-1 weil das Letzte Feld das Aktualisierungsdatum ist
 					for(var i=1;i<=stufe.length-1; i++){
@@ -191,18 +191,18 @@
 						if(personal){
 							var facher = [];
 							facher = JSON.parse(localStorage.getItem("facher"));
-							
+
 							if(facher==null || facher.length == 0){
 								myTable ="<tr><td>Füge deine Fächer unter Account hinzu!</td></tr>";
 							}else{
-								
+
 								for(var j=0;j<facher.length;j++){
 									var fach = facher[j];
 									if(obj.Fach.toUpperCase() == fach.toUpperCase()){
 										if(datum != obj.Datum){
 											myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
 											myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
-											
+
 											myTable+= "<tr><td class='fach'>"+obj.Fach+"</td>";
 											myTable+= "<td class='stunde'>"+obj.Stunde+"</td>";
 											myTable+= "<td>"+obj.Vertreter+"</td>";
@@ -232,7 +232,7 @@
 							if(datum != obj.Datum){
 									myTable+= "<tr><td colspan='3' id='date'>"+obj.Tag+"</td>";
 									myTable+= "<td colspan='2' id='date'>"+obj.Datum+"</td></tr>";
-									
+
 									myTable+= "<tr><td class='fach'>"+obj.Fach+"</td>";
 									myTable+= "<td class='stunde'>"+obj.Stunde+"</td>";
 									myTable+= "<td>"+obj.Vertreter+"</td>";
@@ -257,37 +257,37 @@
 								datum = obj.Datum;
 								datum = obj.Datum;
 						}
-						
+
 					}
-					
-					
+
+
 					myTable+="<tr><td id='aktStand'>"+stufe[stufe.length-1].Date+"</td></tr>";
 					document.getElementById("table").innerHTML = myTable;
 					document.getElementById("table").style.display="table";
 					document.getElementById("conWarn").style.display="none";
-					
+
 					localStorage.setItem("vPlan" + jahrgang, myTable);
-					
+
 					setStorage();
 				});
-			
+
 			} else {
 				// User logged out
 			}
 			});
 		//Ende Online-Mode
-		
-		
-		
+
+
+
 		}
 		else{
 			document.getElementById("table").innerHTML = localStorage.getItem("vPlan"+jahrgang);
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	function showFacher(){
 		var output = "Aktuelle Fächer:<ul>";
 		var facher=[];
@@ -302,11 +302,11 @@
 		output += "</ul>"
 		document.getElementById("conFacher").innerHTML=output;
 	}
-	
+
 	function addFach(){
 		var facher=[];
 		facher=JSON.parse(localStorage.getItem("facher"));
-		
+
 		if(facher==null){
 			facher=[document.getElementById('addFachInput').value];
 		}else{
@@ -314,9 +314,9 @@
 		}
 		localStorage.setItem("facher", JSON.stringify(facher));
 		showFacher();
-		
+
 	}
-	
+
 	function removeFach(kurs){
 		var facher=[];
 		facher=JSON.parse(localStorage.getItem("facher"));
@@ -331,32 +331,32 @@
 		}
 		showFacher();
 	}
-	
+
 	function loginForm(){
-		document.getElementById("conAcc").style.display="block";	
+		document.getElementById("conAcc").style.display="block";
 		document.getElementById("table").style.display="none";
 	}
-	
+
 	function setStorage(){
 		localStorage.setItem("email", document.getElementById('uName').value);
 		localStorage.setItem("pwd", document.getElementById('pwd').value);
-		
+
 		if($("#dropJahrgang :selected").text()=="Jahrgangsstufe"){
 		}else{
 		localStorage.setItem("stufe", $("#dropJahrgang :selected").text());
 		}
 	}
-	
+
 	function getStufe(){
 		stufe=localStorage.getItem("stufe");
 		return stufe;
 	}
-	
+
 	function disableFirst(){
 		localStorage.setItem("first", "first");
 		document.getElementById("first").style.display="none";
 	}
-	
+
 	$(document).ready(function(){
 		//first Start:
 		var first=localStorage.getItem("first");
@@ -370,17 +370,28 @@
 				//}
 			}
 		}
-	
-	
+
+
 		signIn("ef");
 		});
-		
-		
-	
-	
-		
-		
+
+
+
+
+
+
 	</script>
+
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74404417-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
 
 </body>
 </html>
